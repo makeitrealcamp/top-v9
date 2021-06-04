@@ -1,0 +1,10 @@
+.Box {
+  width: 100px;
+  height: 100px;
+  background-color: goldenrod;
+}
+
+.Box--dark {
+  background-color: #333;
+}
+

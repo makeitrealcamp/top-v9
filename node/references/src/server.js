@@ -17,3 +17,24 @@ app.use('/posts', postRouter)
 app.listen(port, () => {
   console.log(`App running at http://localhost:${port}`)
 });
+
+// call stack
+// Event Loop
+// async function getData() {
+//   const response = await HTTP
+//   console.log(response)
+
+  // HTTP
+  //   .then(response => console.log(response))
+  //   .catch(error => console.log(error))
+// }
+
+// pending
+// resolved
+// rejected
+
+// new Promise((resolve, reject) => {
+//   const data = 0
+//   resolve(data)
+//   // reject(error)
+// })

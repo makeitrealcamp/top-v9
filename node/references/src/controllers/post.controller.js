@@ -2,65 +2,95 @@ const Post = require('../models/post.model')
 const User = require('../models/user.model')
 
 module.exports = {
-  create(req, res) {
-    const { body, params: { userId } } = req
+  async create(req, res) {
+    try {
+      const { body, params: { userId } } = req
 
-    User
-      .findById(userId)
-      .then(user => {
-        if(user) {
-          Post
-            .create({
-              ...body,
-              author: userId
-            })
-            .then(post => {
-              user.articles.push(post._id)
+      const user = await User.findById(userId)
 
-              user
-                .save({ validateBeforeSave: false })
-                .then(() => {
-                  res.status(201).json(post)
-                })
-                .catch(error => {
-                  res.status(400).json({ message: error.message })
-                })
-            })
-            .catch(error => {
-              res.status(400).json({ message: error.message })
-            })
-        } else {
-          throw new Error('El usuario no existe')
-        }
-      })
-      .catch(error => {
-        res.status(400).json({ message: error.message })
-      })
+      if(!user) {
+        throw new Error('El usuario no existe')
+      }
+
+      const post = await Post.create({ ...body, author: userId })
+      user.articles.push(post._id)
+
+      await user.save({ validateBeforeSave: false })
+      res.status(201).json(post)
+    } catch(error) {
+      res.status(400).json({ message: error.message })
+    }
+
+    // User
+    //   .findById(userId)
+    //   .then(user => {
+    //     if(user) {
+    //       Post
+    //         .create({
+    //           ...body,
+    //           author: userId
+    //         })
+    //         .then(post => {
+    //           user.articles.push(post._id)
+
+    //           user
+    //             .save({ validateBeforeSave: false })
+    //             .then(() => {
+    //               res.status(201).json(post)
+    //             })
+    //             .catch(error => {
+    //               res.status(400).json({ message: error.message })
+    //             })
+    //         })
+    //         .catch(error => {
+    //           res.status(400).json({ message: error.message })
+    //         })
+    //     } else {
+    //       throw new Error('El usuario no existe')
+    //     }
+    //   })
+    //   .catch(error => {
+    //     res.status(400).json({ message: error.message })
+    //   })
   },
-  list(req, res) {
-    const { userId } = req.params
+  async list(req, res) {
+    try {
+      const { userId } = req.params
 
-    Post
-      .find({ author: userId })
-      .select('title content -_id')
-      .then(posts => {
-        res.status(200).json(posts)
-      })
-      .catch(error => {
-        res.status(404).json({ message: error.message })
-      })
+      const posts = await Post.find({ author: userId }).select('title content -_id')
+      res.status(200).json(posts)
+    } catch(error) {
+      res.status(404).json({ message: error.message })
+    }
+
+    // Post
+    //   .find({ author: userId })
+    //   .select('title content -_id')
+    //   .then(posts => {
+    //     res.status(200).json(posts)
+    //   })
+    //   .catch(error => {
+    //     res.status(404).json({ message: error.message })
+    //   })
   },
-  show(req, res) {
-    const { postId } = req.params
+  async show(req, res) {
+    try {
+      const { postId } = req.params
 
-    Post
-      .findById(postId)
-      .populate('author', 'name')
-      .then(post => {
-        res.status(200).json(post)
-      })
-      .catch(error => {
-        res.status(404).json({ message: error.message })
-      })
+      const post = await Post.findById(postId).populate('author', 'name')
+      res.status(200).json(post)
+    } catch(error) {
+      res.status(404).json({ message: error.message })
+    }
+
+    // Post
+    //   .findById(postId)
+    //   .populate('author', 'name')
+    //   .then(post => {
+    //     res.status(200).json(post)
+    //   })
+    //   .catch(error => {
+    //     res.status(404).json({ message: error.message })
+    //   })
   }
 }

@@ -17,7 +17,7 @@ function Home() {
 
 class PrivateRoute extends React.Component {
   state = {
-    isAllowed: true
+    isAllowed: true,
   }
 
   componentDidMount() {

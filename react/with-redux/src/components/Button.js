@@ -1,5 +1,5 @@
 import { connect, useDispatch } from 'react-redux'
-import { INCREMENT, increment } from '../store'
+import { INCREMENT, increment } from '../store/counterReducer'
 
 // function Button({ handleIncrement }) {
 function Button() {

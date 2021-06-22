@@ -6,12 +6,10 @@ import { connect, useSelector } from 'react-redux'
   // console.log(other)
   // console.log(order)
 
-const hola = 'mundo'
-
 function Counter() {
-  const { count } = useSelector(state => {
+  const { count } = useSelector(({ counterReducer }) => {
     return {
-      count: state.count
+      count: counterReducer.count
     }
   })
 
@@ -24,7 +22,7 @@ export default Counter
 
 // function mapStateToProps(state) {
 //   return {
-//     count: state.count,
+//     count: state.counterReducer.count,
 //     hola: 'mundo',
 //     order: '2'
 //   }

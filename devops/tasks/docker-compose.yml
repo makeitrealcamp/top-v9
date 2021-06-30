@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  mongo:
+    # docker run -p 27018:27017 -v ~/Documents/programming/data/db:/data/db --name=tasks-mongo mongo
+    image: mongo
+    restart: always
+    container_name: tasks-mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - ~/Documents/programming/data/db:/data/db
+  backend:
+    # docker run -p 8000:9000 -v ./backend/src:/usr/src/app/src --name=tasks-backend -e MONGO_URI=mongodb://tasks-mongo:27018/tasks -e PORT=9000 simonhoyos/tasks-backend
+    build: ./backend
+    restart: always
+    container_name: tasks-backend
+    ports:
+      - 8000:9000
+    volumes:
+      - ./backend/src:/usr/src/app/src
+    environment:
+      - MONGO_URI=mongodb://tasks-mongo:27017/tasks
+      - PORT=9000
+  frontend:
+    # docker run -p 3000:3000 -v ./frontend/src:/usr/src/app/src --name=tasks-frontend -it simonhoyos/tasks-frontend
+    build: ./frontend
+    restart: always
+    container_name: tasks-frontend
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend/src:/usr/src/app/src
+    stdin_open: true

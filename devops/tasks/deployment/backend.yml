@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tasksbackenddeployment
+spec:
+  selector:
+    matchLabels:
+      app: tasksbackendlabel
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: tasksbackendlabel
+    spec:
+      containers:
+        - name: tasksbackend
+          imagePullPolicy: Never
+          image: simonhoyos/tasks-backend
+          ports:
+            - containerPort: 9000
+          env:
+            - name: MONGO_URI
+              value: mongodb://tasksdatabaseservice:27017/tasks

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import axios from 'axios'
 import './App.css';
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
   async function handleSubmit(e) {
     e.preventDefault()
 
+    console.log('hola')
     const data = new FormData()
 
     data.append('email', email)
@@ -34,15 +36,17 @@ function App() {
       data.append('profilePicture', file, file.name)
     }
 
-    // const response = axios({
-    //   method: 'POST',
-    //   baseURL: 'http://localhost:8000',
-    //   url: '/users/profile',
-    //   data,
-    //   headers: {
-    //     'Content-Type': 'multipart/form-data'
-    //   }
-    // })
+    const response = axios({
+      method: 'POST',
+      baseURL: 'http://localhost:8000',
+      url: '/users/profile',
+      data,
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+
+    console.log(response)
   }
 
   return (
@@ -63,6 +67,7 @@ function App() {
           onChange={selectImage}
           accept="image/*"
         />
+        <button>Create profile</button>
       </form>
       {image && (
         <img
@@ -70,7 +75,6 @@ function App() {
           alt="preview"
         />
       )}
-      <button>Create profile</button>
     </div>
   );
 }

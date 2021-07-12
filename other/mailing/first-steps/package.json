@@ -1,0 +1,16 @@
+{
+  "name": "first-steps",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "author": "Simon Hoyos <shmesa23@gmail.com> (https://www.linkedin.com/in/simonhoyos)",
+  "license": "MIT",
+  "dependencies": {
+    "nodemailer": "^6.6.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}

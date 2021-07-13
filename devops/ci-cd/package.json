@@ -1,0 +1,13 @@
+{
+  "name": "ci-cd",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Simon Hoyos <shmesa23@gmail.com> (https://www.linkedin.com/in/simonhoyos)",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest ."
+  },
+  "devDependencies": {
+    "jest": "^27.0.6"
+  }
+}

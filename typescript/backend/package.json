@@ -8,7 +8,7 @@
     "dev": "nodemon src/server.ts",
     "prebuild": "rimraf -rf ./build",
     "build": "tsc -p .",
-    "start": "node src/server.js"
+    "start": "node build/src/server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
